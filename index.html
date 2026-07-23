@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你好,我是——个人主页</title>
+<style>
+  :root{
+    --paper: #faf6ec;
+    --paper-deep: #f1ead9;
+    --ink: #2b2a33;
+    --ink-soft: #5a5868;
+    --indigo: #2e4374;
+    --indigo-soft: #6b7ba8;
+    --gold: #c9a227;
+    --line: rgba(43,42,51,0.14);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .serif{
+    font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  }
+
+  a{ color: inherit; }
+
+  section{
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 90px 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    max-width: 900px;
+    padding: 40px 28px 80px;
+    overflow: hidden;
+  }
+
+  .orbit-deco{
+    position: absolute;
+    top: 50%;
+    right: -60px;
+    transform: translateY(-50%);
+    width: 380px;
+    height: 380px;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .orbit-ring{
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .orbit-sun{
+    fill: var(--gold);
+    opacity: 0.85;
+  }
+
+  .orbit-dot{
+    fill: var(--indigo);
+  }
+
+  .orbit-group{
+    transform-origin: 190px 190px;
+    animation: spin 18s linear infinite;
+  }
+  .orbit-group.slow{
+    animation-duration: 30s;
+    animation-direction: reverse;
+  }
+
+  @keyframes spin{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .orbit-group{ animation: none; }
+  }
+
+  .eyebrow{
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--indigo);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .hero h1{
+    font-size: clamp(34px, 6vw, 56px);
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 640px;
+  }
+
+  .hero .name-slot{
+    border-bottom: 3px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  .hero p.tagline{
+    margin-top: 22px;
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 520px;
+  }
+
+  .hero .meta{
+    margin-top: 32px;
+    font-size: 14px;
+    color: var(--indigo);
+    letter-spacing: 0.02em;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .hero .meta span:not(:first-child)::before{
+    content: "·";
+    margin: 0 8px;
+    color: var(--line);
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head{
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .sec-num{
+    font-size: 13px;
+    color: var(--indigo-soft);
+    letter-spacing: 0.1em;
+  }
+
+  .sec-head h2{
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+  }
+
+  .about-grid p{
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+
+  .fact-list{
+    border-left: 1px solid var(--line);
+    padding-left: 24px;
+  }
+
+  .fact-row{
+    margin-bottom: 18px;
+  }
+
+  .fact-label{
+    font-size: 12px;
+    color: var(--indigo-soft);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .fact-value{
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px){
+    .about-grid{ grid-template-columns: 1fr; }
+    .fact-list{ border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 24px; }
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before{
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: repeating-linear-gradient(to bottom, var(--indigo-soft) 0 4px, transparent 4px 9px);
+  }
+
+  .t-item{
+    position: relative;
+    padding-bottom: 34px;
+  }
+
+  .t-item:last-child{ padding-bottom: 0; }
+
+  .t-dot{
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--indigo);
+  }
+
+  .t-item.future .t-dot{
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.15);
+  }
+
+  .t-date{
+    font-size: 13px;
+    color: var(--indigo);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .t-text{
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+
+  /* ---------- PROJECT CARD ---------- */
+  .project-card{
+    background: var(--paper-deep);
+    border-radius: 14px;
+    padding: 34px;
+    border: 1px solid var(--line);
+  }
+
+  .project-card h3{
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+
+  .project-card .en{
+    font-size: 13px;
+    color: var(--indigo-soft);
+    margin-bottom: 16px;
+    letter-spacing: 0.03em;
+  }
+
+  .project-card p{
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    margin-bottom: 20px;
+  }
+
+  .tag-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag{
+    font-size: 12.5px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    color: var(--indigo);
+    background: var(--paper);
+  }
+
+  /* ---------- LANGUAGE STAMPS ---------- */
+  .stamp-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .stamp{
+    border: 1.5px dashed var(--indigo-soft);
+    border-radius: 10px;
+    padding: 18px 10px;
+    text-align: center;
+    transform: rotate(var(--r, 0deg));
+  }
+  .stamp:nth-child(1){ --r: -2deg; }
+  .stamp:nth-child(2){ --r: 1.5deg; }
+  .stamp:nth-child(3){ --r: -1deg; }
+  .stamp:nth-child(4){ --r: 2deg; }
+
+  .stamp .lang{
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .stamp .level{
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 700px){
+    .stamp-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .skill-cloud{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-cloud span{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .skill-cloud span:not(:last-child)::after{
+    content: "·";
+    margin-left: 10px;
+    color: var(--line);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 28px 90px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+
+  footer p{
+    color: var(--ink-soft);
+    font-size: 14.5px;
+  }
+
+  footer .signoff{
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--indigo-soft);
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 700px){
+    section, footer{
+      padding: 56px 20px;
+    }
+
+    .hero{
+      min-height: auto;
+      padding: 70px 20px 56px;
+    }
+
+    .orbit-deco{
+      width: 200px;
+      height: 200px;
+      top: -10px;
+      right: -50px;
+      transform: none;
+      opacity: 0.45;
+    }
+
+    .hero h1{
+      font-size: 30px;
+    }
+
+    .hero p.tagline{
+      font-size: 16px;
+    }
+
+    .hero .meta{
+      flex-direction: column;
+      row-gap: 4px;
+    }
+    .hero .meta span:not(:first-child)::before{
+      content: none;
+    }
+
+    .sec-head h2{
+      font-size: 22px;
+    }
+
+    .project-card{
+      padding: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <svg class="orbit-deco" viewBox="0 0 380 380" aria-hidden="true">
+      <circle class="orbit-ring" cx="190" cy="190" r="70"></circle>
+      <circle class="orbit-ring" cx="190" cy="190" r="130"></circle>
+      <circle class="orbit-ring" cx="190" cy="190" r="185"></circle>
+      <circle class="orbit-sun" cx="190" cy="190" r="10"></circle>
+      <g class="orbit-group">
+        <circle class="orbit-dot" cx="260" cy="190" r="5"></circle>
+      </g>
+      <g class="orbit-group slow">
+        <circle class="orbit-dot" cx="190" cy="60" r="4"></circle>
+      </g>
+    </svg>
+
+    <p class="eyebrow serif">自我介绍</p>
+    <h1 class="serif">你好,我是<br><span class="name-slot">〔Hatobu〕</span></h1>
+    <p class="tagline">在文字与代码之间搭建自己的轨道 —— 目前在南京理工大学读日语,业余捣鼓游戏开发和德语。</p>
+    <p class="meta">
+      <span>南京理工大学</span>
+      <span>日语语言文学 2026级</span>
+      <span>独立游戏开发者</span>
+    </p>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <span class="sec-num serif">01</span>
+      <h2 class="serif">关于我</h2>
+    </div>
+    <div class="about-grid">
+      <p>
+        我是刚考进南京理工大学日语系的新生,同时也是独立叙事游戏 Aura/EO
+        (<em>Eternal Orbis</em>)的开发者 —— 从美术管线、剧本到系统设计都自己上手。
+        平时喜欢写东西、折腾语言,也会用 AI 绘图和 3D 工具做点小项目。
+      </p>
+      <div class="fact-list">
+        <div class="fact-row">
+          <div class="fact-label">院校</div>
+          <div class="fact-value">南京理工大学</div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-label">专业</div>
+          <div class="fact-value">日语语言文学</div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-label">语言</div>
+          <div class="fact-value">中文 · 日语 · 英语 · 德语(在学)</div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-label">方向</div>
+          <div class="fact-value">独立游戏开发 · 叙事设计</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head">
+      <span class="sec-num serif">02</span>
+      <h2 class="serif">我的轨迹</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">更早之前</div>
+        <div class="t-text">从初中开始构想游戏世界观,《Aura》系列的雏形就是在那时候埋下的。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">2026.7</div>
+        <div class="t-text">被南京理工大学日语系录取。</div>
+      </div>
+      <div class="t-item future">
+        <div class="t-dot"></div>
+        <div class="t-date">2026.9(计划)</div>
+        <div class="t-text">大一,目标是专业排名第一,为后续转专业打基础。</div>
+      </div>
+      <div class="t-item future">
+        <div class="t-dot"></div>
+        <div class="t-date">未来学期(计划)</div>
+        <div class="t-text">申请转入计算机科学与技术专业。</div>
+      </div>
+      <div class="t-item future">
+        <div class="t-dot"></div>
+        <div class="t-date">长期方向</div>
+        <div class="t-text">保研 / 海外深造(游戏相关方向)正在同步考察中。</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="project">
+    <div class="sec-head">
+      <span class="sec-num serif">03</span>
+      <h2 class="serif">在做的项目</h2>
+    </div>
+    <div class="project-card">
+      <h3 class="serif">《永恒之轨》</h3>
+      <div class="en">Eternal Orbis</div>
+      <p>
+        一款叙事驱动的视觉小说,由我独立完成美术管线(Blender → Godot 卡通渲染)、
+        剧本创作与系统设计。
+      </p>
+      <div class="tag-row">
+        <span class="tag">独立开发</span>
+        <span class="tag">叙事设计</span>
+        <span class="tag">Blender</span>
+        <span class="tag">Godot</span>
+        <span class="tag">美术管线</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="lang">
+    <div class="sec-head">
+      <span class="sec-num serif">04</span>
+      <h2 class="serif">语言与技能</h2>
+    </div>
+    <div class="stamp-grid">
+      <div class="stamp">
+        <div class="lang serif">中文</div>
+        <div class="level">母语</div>
+      </div>
+      <div class="stamp">
+        <div class="lang serif">日语</div>
+        <div class="level">N3 水平</div>
+      </div>
+      <div class="stamp">
+        <div class="lang serif">英语</div>
+        <div class="level">雅思 7.0</div>
+      </div>
+      <div class="stamp">
+        <div class="lang serif">德语</div>
+        <div class="level">学习中 · 目标 B2</div>
+      </div>
+    </div>
+    <div class="skill-cloud">
+      <span>独立游戏开发</span>
+      <span>Blender</span>
+      <span>Godot</span>
+      <span>AI 绘图(ComfyUI)</span>
+      <span>小说创作</span>
+      <span>SMT 系列汉化</span>
+    </div>
+  </section>
+
+  <footer>
+    <p>谢谢你们一直以来的支持 —— 这个页面还在慢慢搭建中,以后会加更多东西进来。</p>
+    <p class="signoff">Made with Claude</p>
+  </footer>
+
+</body>
+</html>
